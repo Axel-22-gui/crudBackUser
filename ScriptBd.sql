@@ -1,0 +1,204 @@
+USE [master]
+GO
+/****** Object:  Database [Users]    Script Date: 18/07/2023 18:26:36 ******/
+CREATE DATABASE [Users]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Users', FILENAME = N'D:\Programas\SQL2022\MSSQL16.MSSQLSERVER\MSSQL\DATA\Users.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Users_log', FILENAME = N'D:\Programas\SQL2022\MSSQL16.MSSQLSERVER\MSSQL\DATA\Users_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [Users] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [Users].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Users] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Users] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Users] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Users] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Users] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Users] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Users] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Users] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Users] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Users] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Users] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Users] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Users] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Users] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Users] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [Users] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Users] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Users] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Users] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Users] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Users] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Users] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Users] SET RECOVERY FULL 
+GO
+ALTER DATABASE [Users] SET  MULTI_USER 
+GO
+ALTER DATABASE [Users] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Users] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Users] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Users] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [Users] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [Users] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'Users', N'ON'
+GO
+ALTER DATABASE [Users] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [Users] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [Users]
+GO
+/****** Object:  Schema [usuarios]    Script Date: 18/07/2023 18:26:36 ******/
+CREATE SCHEMA [usuarios]
+GO
+/****** Object:  Table [dbo].[trans_perf_usu]    Script Date: 18/07/2023 18:26:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[trans_perf_usu](
+	[trpeus_id] [bigint] IDENTITY(1,1) NOT NULL,
+	[trpeus_perf_id] [int] NOT NULL,
+	[trpeus_usu_id] [bigint] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[trpeus_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [usuarios].[perfil]    Script Date: 18/07/2023 18:26:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [usuarios].[perfil](
+	[perf_id] [int] IDENTITY(1,1) NOT NULL,
+	[perf_nombre] [varchar](200) NOT NULL,
+	[perf_estado] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[perf_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [usuarios].[usuario]    Script Date: 18/07/2023 18:26:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [usuarios].[usuario](
+	[usu_id] [bigint] IDENTITY(1,1) NOT NULL,
+	[usu_nombre] [varchar](200) NOT NULL,
+	[usu_apellido] [varchar](200) NOT NULL,
+	[usu_edad] [int] NOT NULL,
+	[usu_correoElectronico] [varchar](150) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[usu_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [usuarios].[perfil] ADD  CONSTRAINT [def_perf_estado]  DEFAULT ((0)) FOR [perf_estado]
+GO
+ALTER TABLE [dbo].[trans_perf_usu]  WITH CHECK ADD FOREIGN KEY([trpeus_perf_id])
+REFERENCES [usuarios].[perfil] ([perf_id])
+GO
+ALTER TABLE [dbo].[trans_perf_usu]  WITH CHECK ADD FOREIGN KEY([trpeus_usu_id])
+REFERENCES [usuarios].[usuario] ([usu_id])
+GO
+/****** Object:  StoredProcedure [usuarios].[agregarUsuario]    Script Date: 18/07/2023 18:26:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usuarios].[agregarUsuario]
+@nombre VARCHAR(200), @apellido VARCHAR(200),
+@edad INT, @correo VARCHAR(150), @idPerfil INT
+AS
+BEGIN
+	INSERT INTO [usuarios].[usuario]
+           ([usu_nombre]
+           ,[usu_apellido]
+           ,[usu_edad]
+           ,[usu_correoElectronico])
+     VALUES
+	 (
+		@nombre,@apellido,@edad,@correo
+	 );
+
+	 DECLARE @idUs INT = (SELECT TOP 1 usu_id FROM usuarios.usuario Order by 1 DESC);
+
+	 INSERT INTO trans_perf_usu (trpeus_perf_id,trpeus_usu_id)
+		VALUES (@idPerfil,@idUs);
+
+	SELECT @idUs;
+END;
+GO
+/****** Object:  StoredProcedure [usuarios].[sp_agregarPerfil]    Script Date: 18/07/2023 18:26:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usuarios].[sp_agregarPerfil] @perfil VARCHAR(200)
+AS
+BEGIN
+	INSERT INTO usuarios.perfil (perf_nombre)
+	VALUES (@perfil);
+
+	SELECT TOP 1 perf_id FROM usuarios.perfil ORDER BY 1 DESC;
+END;
+GO
+/****** Object:  StoredProcedure [usuarios].[sp_agregarPerfilAUsuario]    Script Date: 18/07/2023 18:26:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [usuarios].[sp_agregarPerfilAUsuario] @idUsuario BIGINT, @idPerfil INT
+AS
+BEGIN
+	INSERT INTO trans_perf_usu (trpeus_perf_id,trpeus_usu_id)
+	VALUES (@idPerfil,@idUsuario);
+
+	SELECT TOP 1 trpeus_id FROM trans_perf_usu ORDER BY 1 DESC;
+END;
+GO
+USE [master]
+GO
+ALTER DATABASE [Users] SET  READ_WRITE 
+GO
