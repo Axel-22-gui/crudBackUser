@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33801.447
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDUser", "CRUDUser.csproj", "{F8B283A3-FCD4-4347-985F-9D82C80E140F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8B283A3-FCD4-4347-985F-9D82C80E140F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B283A3-FCD4-4347-985F-9D82C80E140F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B283A3-FCD4-4347-985F-9D82C80E140F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B283A3-FCD4-4347-985F-9D82C80E140F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC0FB803-4276-4355-A4B9-72016335B98C}
+	EndGlobalSection
+EndGlobal
